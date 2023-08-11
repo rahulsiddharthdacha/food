@@ -3,34 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
     <title>Food Catering</title>
 </head>
 <body>
-    <header>
+    <header class="bg-primary text-white text-center py-4">
         <h1>Food Catering Menu</h1>
     </header>
-    <div class="menu">
-        <label>
-            <input type="checkbox" class="item" data-name="Burger" data-price="8.99">
-            <div class="item-details">
-                <img src="burger.jpg" alt="Burger">
-                <span class="item-name">Burger</span>
-                <span class="item-price">$8.99</span>
-            </div>
-        </label>
-        <label>
-            <input type="checkbox" class="item" data-name="Pizza" data-price="10.99">
-            <div class="item-details">
-                <img src="pizza.jpg" alt="Pizza">
-                <span class="item-name">Pizza</span>
-                <span class="item-price">$10.99</span>
-            </div>
-        </label>
-        <!-- Add more items here -->
+    <div class="container mt-5">
+        <div class="row menu">
+            <!-- Item cards will be dynamically generated here -->
+        </div>
+        <button id="calculate" class="btn btn-primary btn-block mt-4">Calculate Total</button>
+        <div id="bill" class="mt-4"></div>
     </div>
-    <button id="calculate">Calculate Total</button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-
