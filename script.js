@@ -1,35 +1,42 @@
 document.addEventListener("DOMContentLoaded", function () {
     const calculateButton = document.getElementById("calculate");
-    const menuContainer = document.querySelector(".menu");
+    const mainCourseContainer = document.getElementById("main-course");
+    const dessertsContainer = document.getElementById("desserts");
     const billElement = document.getElementById("bill");
+    const billImageElement = document.getElementById("billImage");
 
-    const items = [
+    const mainCourseItems = [
         { name: "Burger", price: 8.99, image: "burger.jpg" },
         { name: "Pizza", price: 10.99, image: "pizza.jpg" },
-        // Add more items here
+        // Add more main course items here
+    ];
+
+    const dessertItems = [
+        { name: "Ice Cream", price: 4.99, image: "ice-cream.jpg" },
+        { name: "Cheesecake", price: 6.99, image: "cheesecake.jpg" },
+        // Add more dessert items here
     ];
 
     // Dynamically create item cards using Bootstrap
-    items.forEach(item => {
+    function createItemCard(item, container) {
         const card = document.createElement("div");
-        card.className = "col-md-4 mb-4";
+        card.className = "card mb-4";
         card.innerHTML = `
-            <div class="card">
-                <img src="${item.image}" alt="${item.name}" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">${item.name}</h5>
-                    <p class="card-text">${item.price.toFixed(2)}</p>
-                </div>
-                <div class="card-footer">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="item form-check-input" data-name="${item.name}" data-price="${item.price}">
-                        Select
-                    </label>
-                </div>
+            <img src="${item.image}" alt="${item.name}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">${item.name}</h5>
+                <p class="card-text">$${item.price.toFixed(2)}</p>
+                <label class="form-check-label">
+                    <input type="checkbox" class="item form-check-input" data-name="${item.name}" data-price="${item.price}">
+                    Select
+                </label>
             </div>
         `;
-        menuContainer.appendChild(card);
-    });
+        container.appendChild(card);
+    }
+
+    mainCourseItems.forEach(item => createItemCard(item, mainCourseContainer));
+    dessertItems.forEach(item => createItemCard(item, dessertsContainer));
 
     calculateButton.addEventListener("click", calculateBill);
 
@@ -46,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         displayBill(total, selectedItems);
+        generateBillImage(total, selectedItems);
     }
 
     function displayBill(total, selectedItems) {
@@ -64,9 +72,50 @@ document.addEventListener("DOMContentLoaded", function () {
         shareButton.addEventListener("click", shareBillOnWhatsApp);
     }
 
+    function generateBillImage(total, selectedItems) {
+        const data = {
+            labels: selectedItems,
+            datasets: [{
+                data: selectedItems.map(_ => 1),
+                backgroundColor: selectedItems.map(_ => getRandomColor()),
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Selected Items'
+                    }
+                }
+            }
+        };
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 400;
+        canvas.height = 300;
+
+        const ctx = canvas.getContext('2d');
+        new Chart(ctx, config);
+
+        billImageElement.innerHTML = '';
+        billImageElement.appendChild(canvas);
+    }
+
     function shareBillOnWhatsApp() {
-        const billText = encodeURIComponent(billElement.textContent);
-        const whatsappLink = `https://api.whatsapp.com/send?text=${billText}`;
+        const canvas = billImageElement.querySelector('canvas');
+        const dataUrl = canvas.toDataURL('image/png');
+
+        const whatsappLink = `https://api.whatsapp.com/send?text=${encodeURIComponent("Check out my food bill!")}&data=${dataUrl}`;
         window.open(whatsappLink, "_blank");
+    }
+
+    function getRandomColor() {
+        return `#${Math.floor(Math.random()*16777215).toString(16)}`;
     }
 });
