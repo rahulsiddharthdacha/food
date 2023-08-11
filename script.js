@@ -4,6 +4,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const dessertsContainer = document.getElementById("desserts");
     const billElement = document.getElementById("bill");
     const billImageElement = document.getElementById("billImage");
+    // ... (previous JavaScript content) ...
+    // ... (previous code) ...
+
+    const eventForm = document.getElementById("event-form");
+
+    eventForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const location = document.getElementById("location").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const people = parseInt(document.getElementById("people").value, 10);
+
+        const total = calculateBill();
+        displayBill(total);
+        generateBillImage(total);
+
+        const shareButton = document.getElementById("shareBill");
+        shareButton.addEventListener("click", function () {
+            shareBillOnWhatsApp(location, date, time, people, total);
+        });
+    });
+
+    // ... (rest of the JavaScript content) ...
+
 
     const mainCourseItems = [
         { name: "Burger", price: 8.99, image: "burger.jpg" },
