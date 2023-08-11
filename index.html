@@ -7,24 +7,30 @@
     <title>Food Catering</title>
 </head>
 <body>
-    <h1>Food Catering Menu</h1>
+    <header>
+        <h1>Food Catering Menu</h1>
+    </header>
     <div class="menu">
         <label>
             <input type="checkbox" class="item" data-name="Burger" data-price="8.99">
-            Burger - $8.99
+            <div class="item-details">
+                <img src="burger.jpg" alt="Burger">
+                <span class="item-name">Burger</span>
+                <span class="item-price">$8.99</span>
+            </div>
         </label>
         <label>
             <input type="checkbox" class="item" data-name="Pizza" data-price="10.99">
-            Pizza - $10.99
-        </label>
-        <label>
-            <input type="checkbox" class="item" data-name="Salad" data-price="5.99">
-            Salad - $5.99
+            <div class="item-details">
+                <img src="pizza.jpg" alt="Pizza">
+                <span class="item-name">Pizza</span>
+                <span class="item-price">$10.99</span>
+            </div>
         </label>
         <!-- Add more items here -->
     </div>
     <button id="calculate">Calculate Total</button>
-    <div id="bill"></div>
     <script src="script.js"></script>
 </body>
 </html>
+
