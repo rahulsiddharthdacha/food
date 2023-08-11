@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ... (previous code) ...
 
     const eventForm = document.getElementById("event-form");
-    const locationInput = document.getElementById("location");
+
 
     eventForm.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -28,48 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-     let map;
-    let marker;
 
-    function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 0, lng: 0 }, // Default center
-            zoom: 15 // Default zoom level
-        });
-
-        marker = new google.maps.Marker({
-            position: { lat: 0, lng: 0 },
-            map: map,
-            draggable: true,
-            animation: google.maps.Animation.DROP
-        });
-
-        // Update marker position when it's dragged
-        marker.addListener("dragend", function () {
-            updateLocationInput(marker.getPosition());
-        });
-
-        // Center the map on the user's current location
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const userLocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                map.setCenter(userLocation);
-                marker.setPosition(userLocation);
-                updateLocationInput(userLocation);
-            });
-        }
-    }
-
-    // Update the location input with latitude and longitude
-    function updateLocationInput(position) {
-        locationInput.value = `${position.lat().toFixed(6)}, ${position.lng().toFixed(6)}`;
-    }
-
-
-    // ... (rest of the JavaScript content) ...
 
 
     const mainCourseItems = [
