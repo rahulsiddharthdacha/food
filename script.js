@@ -19,7 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="card-body">
                     <h5 class="card-title">${item.name}</h5>
                     <p class="card-text">${item.price.toFixed(2)}</p>
-                    <input type="checkbox" class="item form-check-input" data-name="${item.name}" data-price="${item.price}">
+                </div>
+                <div class="card-footer">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="item form-check-input" data-name="${item.name}" data-price="${item.price}">
+                        Select
+                    </label>
                 </div>
             </div>
         `;
